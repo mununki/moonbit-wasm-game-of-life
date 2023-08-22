@@ -1,0 +1,3 @@
+package main
+
+import "moonbit_game_of_life/lib"
