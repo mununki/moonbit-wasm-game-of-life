@@ -63,11 +63,7 @@ func live_neighbor_count(self : Universe, row : Int, column : Int) -> Int {
       let neighbor_row = (row + delta_rows[r]) % self.height
       let neighbor_col = (column + delta_cols[c]) % self.width
       let idx = self.get_index(neighbor_row, neighbor_col)
-      count = count +
-      match self.cells[idx] {
-        Alive => 1
-        Dead => 0
-      }
+      count = count + self.get_cell(idx)
       c = c + 1
     }
     r = r + 1
