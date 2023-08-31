@@ -9,6 +9,29 @@ struct Universe {
   mut cells : Array[Cell]
 }
 
+// colors in Js
+// 0: GRID_COLOR,
+// 1: DEAD_COLOR,
+// 2: ALIVE_COLOR,
+
+// externref
+
+type Canvas_ctx
+
+func begin_path(self : Canvas_ctx) = "canvas" "begin_path"
+
+func set_stroke_style(self : Canvas_ctx, color : Int) = "canvas" "set_stroke_style"
+
+func set_fill_style(self : Canvas_ctx, color : Int) = "canvas" "set_fill_style"
+
+func move_to(self : Canvas_ctx, x : Int, y : Int) = "canvas" "move_to"
+
+func line_to(self : Canvas_ctx, x : Int, y : Int) = "canvas" "line_to"
+
+func stroke(self : Canvas_ctx) = "canvas" "stroke"
+
+func fill_rect(self : Canvas_ctx, x : Int, y : Int, width : Int, height : Int) = "canvas" "fill_rect"
+
 func get_index(self : Universe, row : Int, column : Int) -> Int {
   row * self.width + column
 }
@@ -35,10 +58,6 @@ pub func get_width(self : Universe) -> Int {
 
 pub func get_height(self : Universe) -> Int {
   self.height
-}
-
-pub func get_cells(self : Universe) -> Array[Cell] {
-  self.cells
 }
 
 pub func get_cell(self : Universe, idx : Int) -> Int {
@@ -71,7 +90,7 @@ func live_neighbor_count(self : Universe, row : Int, column : Int) -> Int {
   count
 }
 
-pub func tick(self : Universe) {
+func tick(self : Universe) {
   let next : Array[Cell] = array_make(self.width * self.height, Dead)
   var r = 0
   while r < self.height {
@@ -100,29 +119,26 @@ pub func tick(self : Universe) {
   self.cells = next
 }
 
-pub func to_string(self : Universe) -> String {
+func draw_grid(self : Universe, canvas : Canvas_ctx, cell_size : Int) {
+  canvas.begin_path()
+  canvas.set_stroke_style(0)
+  var c = 0
+  while c <= self.width {
+    canvas.move_to(c * (cell_size + 1) + 1, 0)
+    canvas.line_to(c * (cell_size + 1) + 1, (cell_size + 1) * self.height + 1)
+    c = c + 1
+  }
   var r = 0
-  var cells = ""
-  while r < self.height {
-    var c = 0
-    while c < self.width {
-      let idx = self.get_index(r, c)
-      let cell = self.cells[idx]
-      // No buffer implementation?
-      cells = cells +
-      match cell {
-        Alive => "▅"
-        Dead => "☐"
-      }
-      c = c + 1
-    }
-    cells = cells + "\n"
+  while r <= self.height {
+    canvas.move_to(0, r * (cell_size + 1) + 1)
+    canvas.line_to((cell_size + 1) * self.width + 1, r * (cell_size + 1) + 1)
     r = r + 1
   }
-  cells
+  canvas.stroke()
 }
 
-pub func print(self : Universe) {
+func draw_cells(self : Universe, canvas : Canvas_ctx, cell_size : Int) {
+  canvas.begin_path()
   var r = 0
   while r < self.height {
     var c = 0
@@ -130,13 +146,25 @@ pub func print(self : Universe) {
       let idx = self.get_index(r, c)
       let cell = self.cells[idx]
       match cell {
-        Alive => "▅".print()
-        Dead => "☐".print()
+        Alive => canvas.set_fill_style(2)
+        Dead => canvas.set_fill_style(1)
       }
+      canvas.fill_rect(
+        c * (cell_size + 1) + 1,
+        r * (cell_size + 1) + 1,
+        cell_size,
+        cell_size,
+      )
       c = c + 1
     }
-    "\n".print()
     r = r + 1
   }
+  canvas.stroke()
+}
+
+pub func render(self : Universe, canvas : Canvas_ctx, cell_size : Int) {
+  self.tick()
+  self.draw_grid(canvas, cell_size)
+  self.draw_cells(canvas, cell_size)
 }
 

@@ -6,7 +6,7 @@ build:
 watch:
 	moon check --watch
 
-convert:
+convert: build
 	wat2wasm target/build/main/main.wat --output=www/src/game_of_life.wasm
 
 run: build convert
