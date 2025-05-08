@@ -48,7 +48,7 @@ fn get_index(self : Universe, row : Int, column : Int) -> Int {
 }
 
 ///|
-pub fn get_random_int(rand : @random.Rand, limit~ : Int) -> Int {
+fn get_random_int(rand : @random.Rand, limit~ : Int) -> Int {
   let x = rand.uint(limit=limit.reinterpret_as_uint()).reinterpret_as_int()
   if x == 0 {
     x + 1
@@ -62,11 +62,10 @@ pub fn new(width : Int, height : Int) -> Universe {
   let cells : FixedArray[Cell] = FixedArray::make(width * height, Dead)
   let rand = @random.new()
   for idx in FixedArray::makei(width * height, fn(i) -> Int { i }) {
-    if idx % (get_random_int(rand, limit=9) + 1) == 0 ||
-      idx % (get_random_int(rand, limit=9) + 1) == 0 {
-      cells[idx] = Alive
-    } else {
+    if idx % get_random_int(rand, limit=9) == 0 {
       cells[idx] = Dead
+    } else {
+      cells[idx] = Alive
     }
   }
   { width, height, cells }
