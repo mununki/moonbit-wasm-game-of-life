@@ -1,6 +1,6 @@
 # Game of life in MoonBitLang
 
-<img src="./screenshot/screenshot_0.png" />
+<img src="./screenshot/screenshot_0.png" width="240" height="240" />
 
 ## Deps
 
