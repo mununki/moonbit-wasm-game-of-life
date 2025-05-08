@@ -26,16 +26,16 @@ const importObject = {
 
 WebAssembly.instantiateStreaming(fetch("src/game_of_life.wasm"), importObject)
   .then((obj) => {
-    const universe_new = obj.instance.exports["moonbit_game_of_life/lib::new"];
-    const get_width = obj.instance.exports["moonbit_game_of_life/lib::@moonbit_game_of_life/lib.Universe::get_width"];
-    const get_height = obj.instance.exports["moonbit_game_of_life/lib::@moonbit_game_of_life/lib.Universe::get_height"];
-    const render = obj.instance.exports["moonbit_game_of_life/lib::@moonbit_game_of_life/lib.Universe::render"];
+    const universe_new = obj.instance.exports["lib.new"];
+    const get_width = obj.instance.exports["lib.get_width"];
+    const get_height = obj.instance.exports["lib.get_height"];
+    const render = obj.instance.exports["lib.render"];
 
-    const universe = universe_new()
+    const universe = universe_new(240, 240)
 
     const width = get_width(universe);
     const height = get_height(universe);
-    const CELL_SIZE = 5;
+    const CELL_SIZE = 1;
 
     const canvas = document.getElementById("game-of-life-canvas");
     canvas.height = (CELL_SIZE + 1) * height + 1;

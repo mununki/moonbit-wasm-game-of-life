@@ -6,9 +6,9 @@ build:
 watch:
 	moon check --watch
 
-convert: build
-	wat2wasm target/build/main/main.wat --output=www/src/game_of_life.wasm
+copy-wasm: build
+	cp target/wasm-gc/release/build/lib/lib.wasm www/src/game_of_life.wasm
 
-run: build convert
-	cd www && yarn
-	cd www && yarn dev
+run: build copy-wasm
+	cd www && pnpm i
+	cd www && pnpm dev

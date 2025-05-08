@@ -1,6 +1,6 @@
-func init {
+///|
+fn main {
   // let universe = @lib.new()
   // universe.tick()
   ()
 }
-

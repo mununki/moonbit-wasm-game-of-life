@@ -1,0 +1,12 @@
+{
+  "link": {
+    "wasm-gc": {
+      "exports": [
+        "new:lib.new",
+        "get_width:lib.get_width",
+        "get_height:lib.get_height",
+        "render:lib.render"
+      ]
+    }
+  }
+}

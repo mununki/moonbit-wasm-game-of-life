@@ -1,0 +1,9 @@
+{
+  "name": "mununki/moonbit-wasm-game-of-life",
+  "version": "0.1.0",
+  "readme": "README.md",
+  "repository": "https://github.com/mununki/moonbit-wasm-game-of-life",
+  "description": "A Game of Life implementation in MoonBit with WASM GC backend",
+  "license": "MIT",
+  "source": "src"
+}

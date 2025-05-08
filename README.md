@@ -4,15 +4,11 @@ https://github.com/mununki/moonbit-wasm-game-of-life/assets/36963424/7907d577-a5
 
 ## Deps
 
-This example works with the following versions of the environment.
+This example works with the following version of the environment.
 
 ```
 ❯ moon version
-moon 0.1.0 (bb920c0 2023-08-18)
-moonc dba5f6e63 /Users/woonki/.moon/bin/moonc
-
-❯ wat2wasm --version
-1.0.33 (git~1.0.33-23-g3d1d29f6)
+moon 0.1.20250428 (a65ec7f 2025-04-28)
 ```
 
 ## Run

@@ -1,0 +1,6 @@
+{
+  "is-main": true,
+  "import": [
+    // "mununki/moonbit-wasm-game-of-life/lib"
+  ]
+}
